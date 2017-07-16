@@ -131,6 +131,8 @@ function start(app, path, mode, options) {
                         response.end(`no pull request: ${pullRequestId}.`);
                         return;
                     }
+                    delete exports.ports[repositoryName][pullRequestId];
+                    await onPortsUpdated();
                     await handler.createComment(locale.pullRequestMergedGot, context);
                     context.doneText = locale.pullRequestMergedDone;
                     exports.commands.push({ command: `${application.pullRequest.mergedCommand} ${port} ${pullRequestId}`, context });
@@ -141,6 +143,8 @@ function start(app, path, mode, options) {
                         response.end(`no pull request: ${pullRequestId}.`);
                         return;
                     }
+                    delete exports.ports[repositoryName][pullRequestId];
+                    await onPortsUpdated();
                     await handler.createComment(locale.pullRequestClosedGot, context);
                     context.doneText = locale.pullRequestClosedDone;
                     exports.commands.push({ command: `${application.pullRequest.closedCommand} ${port} ${pullRequestId}`, context });
